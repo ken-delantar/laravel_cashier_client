@@ -1,0 +1,6 @@
+[
+  {
+    "type": "sqlite",
+    "path": "c:\\Users\\KEN\\Herd\\laravel_client_side\\database\\database.sqlite"
+  }
+]

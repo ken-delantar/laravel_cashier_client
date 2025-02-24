@@ -113,19 +113,40 @@
                         </p>
                         <p class="card-description">{{ \Illuminate\Support\Str::words($product->description, 30) }}</p>
 
-                        <form action="{{ route('checkout') }}" method="POST">
+                        <form action="{{ route('checkout') }}" method="POST" class="p-4 border rounded shadow-sm bg-light">
                             @csrf
                             @method('POST')
-
+                        
+                            <h5 class="mb-3">Select Payment Method</h5>
+                        
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment_method" id="card" value="card" checked>
+                                <label class="form-check-label" for="card">
+                                    <i class="fas fa-credit-card"></i> Card
+                                </label>
+                            </div>
+                        
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment_method" id="cashapp" value="cashapp">
+                                <label class="form-check-label" for="cashapp">
+                                    Cash App Pay
+                                </label>
+                            </div>
+                        
                             <input type="hidden" value="{{ $product_price->id }}" name="price_id">
-                            <button type="submit" class="card-button">BUY</button>
+                        
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-shopping-cart"></i> BUY NOW
+                            </button>
                         </form>
+
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+                        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+                        
                     </div>
                 </div>
             @endif
         @endforeach
-    </div>
-
     </div>
     
 </x-app-layout>

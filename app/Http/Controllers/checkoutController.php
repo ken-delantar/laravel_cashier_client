@@ -16,11 +16,22 @@ class checkoutController extends Controller
     public function checkout(Request $request){
         $user = Auth::user();
         $domain = env('APP_URL');
+        
+        $request->validate([
+            'price_id' => 'required',
+            'payment_method' => 'required',
+        ]);
 
         try {
             $customers = \Stripe\Customer::all(['email' => $user->email]);
             if ($customers->isEmpty()) {
-                $customer = \Stripe\Customer::create(['email' => $user->email]);
+                $customer = \Stripe\Customer::create([
+                    'email' => $user->email,
+                    'name' => $user->name, 
+                    'metadata' => [
+                        'role' => 'buyer'
+                    ]
+                ]);                
             } else {
                 $customer = $customers->data[0];
             }
@@ -34,7 +45,11 @@ class checkoutController extends Controller
                     ],
                 ],
                 'mode' => 'payment',
+
                 'customer' => $customer->id,
+                'payment_method_types' => [
+                    $request->payment_method,
+                ],
                 'metadata' => [
                     'order_status' => 'Pending',
                     'vendor_id' => $price->metadata->stripe_account

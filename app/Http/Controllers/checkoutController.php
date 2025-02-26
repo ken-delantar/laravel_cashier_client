@@ -38,7 +38,7 @@ class checkoutController extends Controller
 
             $price = \Stripe\Price::retrieve($request->price_id);
             
-            $commissionRate = 0.02;
+            $commissionRate = 0.05;
             $totalAmount = $price->unit_amount;
             $vendorAccount = $price->metadata->stripe_account;
             $commissionFee = round($totalAmount * $commissionRate);
